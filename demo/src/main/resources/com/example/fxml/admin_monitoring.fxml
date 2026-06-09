@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.AdminMonitoringController"
+      spacing="20" style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <Label text="📈 Monitoring Sistem" styleClass="label-title"/>
+    <Label text="Statistik keseluruhan aktivitas di dalam aplikasi." styleClass="label-muted"/>
+
+    <HBox spacing="16">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER">
+            <Label text="Total User" styleClass="stat-card-label"/>
+            <Label fx:id="lblTotalUser" text="0" styleClass="stat-card-value"/>
+        </VBox>
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER">
+            <Label text="Total Destinasi" styleClass="stat-card-label"/>
+            <Label fx:id="lblTotalDestinasi" text="0" styleClass="stat-card-value"/>
+        </VBox>
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER">
+            <Label text="Total Booking" styleClass="stat-card-label"/>
+            <Label fx:id="lblTotalBooking" text="0" styleClass="stat-card-value"/>
+        </VBox>
+    </HBox>
+
+    <Separator/>
+
+    <Label text="Booking Terbaru (Semua Destinasi)" styleClass="label-section"/>
+    
+    <TableView fx:id="tableBooking" VBox.vgrow="ALWAYS" prefHeight="350">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colUser" text="Wisatawan" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="username"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colDestinasi" text="Destinasi" prefWidth="180">
+                <cellValueFactory><PropertyValueFactory property="namaWisata"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="100">
+                <cellValueFactory><PropertyValueFactory property="tglKunjungan"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colTotal" text="Total" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="formattedTotalHarga"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="100">
+                <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+</VBox>

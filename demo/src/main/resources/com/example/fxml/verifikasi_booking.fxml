@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.VerifikasiBookingController"
+      spacing="16" style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <Label text="✅ Verifikasi Booking" styleClass="label-title"/>
+    <Label text="Kelola pemesanan tiket dari wisatawan untuk destinasi Anda." styleClass="label-muted"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Filter Status:" styleClass="form-label"/>
+        <ComboBox fx:id="cmbStatus" promptText="Pending" prefWidth="150" onAction="#handleFilter"/>
+    </HBox>
+
+    <TableView fx:id="tableBooking" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colUser" text="Wisatawan" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="username"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colDestinasi" text="Destinasi" prefWidth="180">
+                <cellValueFactory><PropertyValueFactory property="namaWisata"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="100">
+                <cellValueFactory><PropertyValueFactory property="tglKunjungan"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colJumlah" text="Tiket" prefWidth="60">
+                <cellValueFactory><PropertyValueFactory property="jumlahTiket"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colTotal" text="Total Bayar" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="formattedTotalHarga"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+        <placeholder>
+            <Label text="Tidak ada data booking" styleClass="label-muted"/>
+        </placeholder>
+    </TableView>
+
+    <HBox spacing="12" alignment="CENTER_RIGHT" fx:id="actionBox">
+        <Button text="❌ Tolak" styleClass="btn-danger" onAction="#handleTolak" prefWidth="120"/>
+        <Button text="✅ Verifikasi" styleClass="btn-success" onAction="#handleTerima" prefWidth="120"/>
+    </HBox>
+
+</VBox>

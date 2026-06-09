@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.UlasanFormController"
+      spacing="16" style="-fx-padding: 16;" stylesheets="@../css/styles.css">
+
+    <Label text="⭐ Tulis Ulasan" styleClass="label-title"/>
+    <Label fx:id="lblDestinasi" text="Untuk Destinasi: -" styleClass="label-subtitle"/>
+
+    <VBox styleClass="form-container" spacing="14">
+        <Label text="Rating (1-5)" styleClass="form-label"/>
+        <HBox spacing="4" fx:id="starContainer">
+            <!-- Stars will be injected here programmatically -->
+        </HBox>
+        <Label fx:id="lblRatingValue" text="0 / 5" styleClass="label-accent"/>
+
+        <Label text="Komentar" styleClass="form-label"/>
+        <TextArea fx:id="txtKomentar" promptText="Bagikan pengalaman Anda mengunjungi tempat ini..."
+                  prefRowCount="4" wrapText="true"/>
+    </VBox>
+
+    <HBox spacing="10">
+        <Button text="Kirim Ulasan" styleClass="btn-primary" onAction="#handleSubmit" prefHeight="40"/>
+        <Button text="Batal" styleClass="button" onAction="#handleCancel" prefHeight="40"/>
+    </HBox>
+</VBox>

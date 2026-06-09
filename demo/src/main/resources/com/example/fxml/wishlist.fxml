@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.WishlistController"
+            fitToWidth="true" hbarPolicy="NEVER"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            stylesheets="@../css/styles.css">
+
+    <VBox spacing="20" style="-fx-padding: 8;">
+        
+        <Label text="❤️ Wishlist Saya" styleClass="label-title"/>
+        <Label text="Daftar destinasi wisata impian yang ingin Anda kunjungi." styleClass="label-muted"/>
+
+        <!-- Cards Container -->
+        <FlowPane fx:id="cardContainer" hgap="16" vgap="16" prefWrapLength="900"/>
+
+        <!-- Empty State -->
+        <VBox fx:id="emptyState" styleClass="empty-state" spacing="12" visible="false" managed="false">
+            <Label text="📭" styleClass="empty-state-icon"/>
+            <Label text="Wishlist Anda masih kosong" styleClass="empty-state-text"/>
+            <Button text="Mulai Jelajahi" styleClass="btn-outline" onAction="#handleExplore"/>
+        </VBox>
+        
+    </VBox>
+</ScrollPane>

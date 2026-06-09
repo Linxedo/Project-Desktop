@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.KelolaDestinasiController"
+            style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16" style="-fx-padding: 0 0 16 0;">
+            <Label text="🏞️ Kelola Destinasi" styleClass="label-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="➕ Tambah Destinasi" styleClass="btn-primary" onAction="#handleShowAddForm"/>
+        </HBox>
+    </top>
+
+    <!-- Table -->
+    <center>
+        <TableView fx:id="tableDestinasi">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50">
+                    <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colNama" text="Nama Destinasi" prefWidth="200">
+                    <cellValueFactory><PropertyValueFactory property="namaWisata"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colKategori" text="Kategori" prefWidth="120">
+                    <cellValueFactory><PropertyValueFactory property="kategoriNama"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colHarga" text="Harga" prefWidth="100">
+                    <cellValueFactory><PropertyValueFactory property="hargaTiket"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colRating" text="Rating" prefWidth="80">
+                    <cellValueFactory><PropertyValueFactory property="ratingRataRata"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+            <placeholder>
+                <Label text="Belum ada destinasi" styleClass="label-muted"/>
+            </placeholder>
+        </TableView>
+    </center>
+
+    <!-- Right Panel: Form (Hidden by default) -->
+    <right>
+        <VBox fx:id="formContainer" spacing="12" prefWidth="350" styleClass="form-container"
+              style="-fx-margin: 0 0 0 16;" visible="false" managed="false">
+            <Label fx:id="lblFormTitle" text="Tambah Destinasi" styleClass="label-subtitle"/>
+            
+            <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+                <VBox spacing="10">
+                    <Label text="Nama Wisata" styleClass="form-label"/>
+                    <TextField fx:id="txtNama"/>
+
+                    <Label text="Kategori" styleClass="form-label"/>
+                    <ComboBox fx:id="cmbKategori" prefWidth="300"/>
+
+                    <Label text="Harga Tiket" styleClass="form-label"/>
+                    <TextField fx:id="txtHarga" promptText="Contoh: 50000"/>
+
+                    <Label text="Jam Operasional" styleClass="form-label"/>
+                    <TextField fx:id="txtJam" promptText="08:00 - 17:00"/>
+
+                    <Label text="Alamat" styleClass="form-label"/>
+                    <TextArea fx:id="txtAlamat" prefRowCount="2" wrapText="true"/>
+
+                    <Label text="Deskripsi" styleClass="form-label"/>
+                    <TextArea fx:id="txtDeskripsi" prefRowCount="3" wrapText="true"/>
+
+                    <!-- Simpan ID destinasi untuk update -->
+                    <Label fx:id="lblId" visible="false" managed="false"/>
+                </VBox>
+            </ScrollPane>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Batal" styleClass="button" onAction="#handleCancelForm"/>
+                <Button text="Simpan" styleClass="btn-primary" onAction="#handleSave"/>
+            </HBox>
+            <Button fx:id="btnDelete" text="🗑️ Hapus" styleClass="btn-danger" onAction="#handleDelete"
+                    maxWidth="Infinity" visible="false"/>
+        </VBox>
+    </right>
+</BorderPane>

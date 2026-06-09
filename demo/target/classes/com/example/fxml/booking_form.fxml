@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.BookingFormController"
+      spacing="20" style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <Label text="🎫 Pesan Tiket" styleClass="label-title"/>
+
+    <VBox styleClass="form-container" spacing="16">
+        <!-- Destination Info -->
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <Label text="📍" style="-fx-font-size: 20px;"/>
+            <VBox spacing="2">
+                <Label fx:id="lblDestinasi" text="Nama Destinasi" styleClass="label-subtitle"/>
+                <Label fx:id="lblHargaSatuan" text="Harga: Rp 0 / tiket" styleClass="label-accent"/>
+            </VBox>
+        </HBox>
+
+        <Separator/>
+
+        <GridPane hgap="16" vgap="14">
+            <Label text="Tanggal Kunjungan" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <DatePicker fx:id="datePicker" promptText="Pilih tanggal" prefWidth="280"
+                        GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="Jumlah Tiket" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Spinner fx:id="spinnerTiket" prefWidth="280" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Total Harga" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label fx:id="lblTotalHarga" text="Rp 0" styleClass="card-price"
+                   style="-fx-font-size: 20px;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        </GridPane>
+
+        <Separator/>
+
+        <HBox spacing="12">
+            <Button text="✅  Konfirmasi Booking" styleClass="btn-primary" onAction="#handleConfirmBooking"
+                    prefHeight="42"/>
+            <Button text="Batal" styleClass="button" onAction="#handleCancel" prefHeight="42"/>
+        </HBox>
+    </VBox>
+</VBox>

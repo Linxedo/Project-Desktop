@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.AdminKategoriController"
+      spacing="16" style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <Label text="🏷️ Manajemen Kategori" styleClass="label-title"/>
+    <Label text="Kelola kategori destinasi wisata yang tersedia." styleClass="label-muted"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="form-container" style="-fx-padding: 16;">
+        <Label text="Nama Kategori Baru:" styleClass="form-label"/>
+        <TextField fx:id="txtNamaKategori" promptText="Misal: Pantai, Gunung..." prefWidth="250"/>
+        <Button text="➕ Tambah" styleClass="btn-primary" onAction="#handleAdd"/>
+    </HBox>
+
+    <TableView fx:id="tableKategori" VBox.vgrow="ALWAYS" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="80">
+                <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colNama" text="Nama Kategori" prefWidth="300">
+                <cellValueFactory><PropertyValueFactory property="namaKategori"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+        <placeholder>
+            <Label text="Tidak ada kategori" styleClass="label-muted"/>
+        </placeholder>
+    </TableView>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="🗑️ Hapus Kategori" styleClass="btn-danger" onAction="#handleDelete"/>
+    </HBox>
+
+</VBox>

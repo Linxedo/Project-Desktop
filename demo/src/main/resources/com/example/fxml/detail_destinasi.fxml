@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.DetailDestinasiController"
+            fitToWidth="true" hbarPolicy="NEVER"
+            style="-fx-background-color: transparent; -fx-background: transparent;"
+            stylesheets="@../css/styles.css">
+
+    <VBox spacing="20" style="-fx-padding: 8;">
+
+        <!-- Back Button -->
+        <Button text="← Kembali" styleClass="btn-outline" onAction="#handleBack"
+                style="-fx-padding: 6 16; -fx-font-size: 12px;"/>
+
+        <!-- Destination Info Card -->
+        <VBox styleClass="form-container" spacing="16">
+            <!-- Header -->
+            <HBox spacing="16" alignment="CENTER_LEFT">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label fx:id="lblNama" text="Nama Destinasi" styleClass="label-title"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label fx:id="lblKategori" text="Kategori" styleClass="badge"/>
+                        <Label fx:id="lblRating" text="★★★★☆ 4.0" styleClass="card-rating"/>
+                    </HBox>
+                </VBox>
+                <VBox alignment="CENTER_RIGHT" spacing="4">
+                    <Label fx:id="lblHarga" text="Rp 50.000" styleClass="card-price" style="-fx-font-size: 22px;"/>
+                    <Label text="/ orang" styleClass="label-muted"/>
+                </VBox>
+            </HBox>
+
+            <Separator/>
+
+            <!-- Info Grid -->
+            <GridPane hgap="20" vgap="12">
+                <Label text="📍 Alamat:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <Label fx:id="lblAlamat" text="-" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="🕐 Jam Operasional:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <Label fx:id="lblJam" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="👤 Pengelola:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Label fx:id="lblPengelola" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            </GridPane>
+
+            <Separator/>
+
+            <!-- Description -->
+            <VBox spacing="6">
+                <Label text="📝 Deskripsi" styleClass="form-section-title"/>
+                <Label fx:id="lblDeskripsi" text="-" wrapText="true" style="-fx-text-fill: #B3B3B3; -fx-line-spacing: 4;"/>
+            </VBox>
+
+            <!-- Map Simulation -->
+            <VBox spacing="6">
+                <Label text="🗺️ Peta Lokasi (Simulasi)" styleClass="form-section-title"/>
+                <VBox alignment="CENTER" prefHeight="180"
+                      style="-fx-background-color: #2A2A2A; -fx-background-radius: 8;">
+                    <Label fx:id="lblMap" text="📍 Peta lokasi destinasi" style="-fx-text-fill: #808080; -fx-font-size: 16px;"/>
+                </VBox>
+            </VBox>
+        </VBox>
+
+        <!-- Action Buttons -->
+        <HBox fx:id="actionButtons" spacing="12">
+            <Button fx:id="btnBooking" text="🎫  Pesan Tiket" styleClass="btn-primary"
+                    onAction="#handleBooking" prefHeight="40"/>
+            <Button fx:id="btnWishlist" text="♡  Wishlist" styleClass="btn-outline"
+                    onAction="#handleWishlist" prefHeight="40"/>
+            <Button fx:id="btnReview" text="⭐  Tulis Ulasan" styleClass="btn-outline"
+                    onAction="#handleReview" prefHeight="40"/>
+        </HBox>
+
+        <!-- Reviews Section -->
+        <VBox spacing="12">
+            <Label text="💬 Ulasan Pengunjung" styleClass="label-section"/>
+            <VBox fx:id="reviewContainer" spacing="10"/>
+            <Label fx:id="lblNoReviews" text="Belum ada ulasan untuk destinasi ini."
+                   styleClass="label-muted" style="-fx-font-size: 14px; -fx-padding: 20;"
+                   visible="false" managed="false"/>
+        </VBox>
+    </VBox>
+</ScrollPane>

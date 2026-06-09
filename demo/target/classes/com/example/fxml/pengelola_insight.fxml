@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.PengelolaInsightController"
+      spacing="16" style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <Label text="📊 Insight &amp; Ulasan" styleClass="label-title"/>
+    <Label text="Pantau kepuasan pengunjung terhadap destinasi wisata Anda." styleClass="label-muted"/>
+
+    <HBox spacing="16">
+        <!-- Stats summary -->
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER">
+            <Label text="Total Ulasan" styleClass="stat-card-label"/>
+            <Label fx:id="lblTotalUlasan" text="0" styleClass="stat-card-value"/>
+        </VBox>
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS" alignment="CENTER">
+            <Label text="Rata-rata Rating" styleClass="stat-card-label"/>
+            <HBox alignment="CENTER" spacing="8">
+                <Label fx:id="lblAvgRating" text="0.0" styleClass="stat-card-value"/>
+                <Label text="⭐" styleClass="star-filled"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <TableView fx:id="tableUlasan" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="createdAt"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colUser" text="Wisatawan" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="username"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colDestinasi" text="Destinasi" prefWidth="180">
+                <cellValueFactory><PropertyValueFactory property="namaWisata"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colRating" text="Rating" prefWidth="100">
+                <cellValueFactory><PropertyValueFactory property="ratingStars"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colKomentar" text="Komentar" prefWidth="350">
+                <cellValueFactory><PropertyValueFactory property="komentar"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+        <placeholder>
+            <Label text="Belum ada ulasan" styleClass="label-muted"/>
+        </placeholder>
+    </TableView>
+
+</VBox>

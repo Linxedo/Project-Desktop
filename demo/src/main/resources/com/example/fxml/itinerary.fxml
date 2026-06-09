@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.ItineraryController"
+            style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <!-- Left: Itinerary List -->
+    <left>
+        <VBox spacing="12" prefWidth="320" style="-fx-padding: 0 16 0 0; -fx-border-color: transparent #2A2A2A transparent transparent; -fx-border-width: 1;">
+            <Label text="🗓️ Rencana Perjalanan" styleClass="label-title"/>
+            <Button text="➕ Buat Rencana Baru" styleClass="btn-primary" onAction="#handleCreateNew" maxWidth="Infinity"/>
+            
+            <ListView fx:id="listItinerary" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;"/>
+        </VBox>
+    </left>
+
+    <!-- Center: Itinerary Details -->
+    <center>
+        <VBox fx:id="detailContainer" spacing="16" style="-fx-padding: 0 0 0 16;" visible="false">
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label fx:id="lblNamaRencana" text="Nama Rencana" styleClass="label-title"/>
+                    <Label fx:id="lblTanggal" text="Tanggal: -" styleClass="label-muted"/>
+                </VBox>
+                <VBox alignment="CENTER_RIGHT">
+                    <Label text="Estimasi Biaya" styleClass="label-muted"/>
+                    <Label fx:id="lblTotalBiaya" text="Rp 0" styleClass="card-price" style="-fx-font-size: 20px;"/>
+                </VBox>
+            </HBox>
+
+            <Separator/>
+
+            <!-- Form Add Detail -->
+            <HBox spacing="10" alignment="CENTER_LEFT" styleClass="form-container" style="-fx-padding: 12;">
+                <ComboBox fx:id="cmbDestinasi" promptText="Pilih Destinasi" prefWidth="200"/>
+                <TextField fx:id="txtWaktu" promptText="Waktu (HH:mm)" prefWidth="120"/>
+                <Button text="Tambah Destinasi" styleClass="btn-outline" onAction="#handleAddDetail"/>
+            </HBox>
+
+            <!-- Table Details -->
+            <TableView fx:id="tableDetail" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colUrutan" text="Urutan" prefWidth="60">
+                        <cellValueFactory><PropertyValueFactory property="urutan"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colWaktu" text="Waktu" prefWidth="80">
+                        <cellValueFactory><PropertyValueFactory property="formattedWaktu"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colDestinasi" text="Destinasi" prefWidth="250">
+                        <cellValueFactory><PropertyValueFactory property="namaWisata"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colHarga" text="Harga Tiket" prefWidth="120">
+                        <cellValueFactory><PropertyValueFactory property="hargaTiket"/></cellValueFactory>
+                    </TableColumn>
+                </columns>
+                <placeholder>
+                    <Label text="Belum ada destinasi di rencana ini" styleClass="label-muted"/>
+                </placeholder>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT">
+                 <Button text="🗑️ Hapus Rencana" styleClass="btn-danger" onAction="#handleDeleteItinerary"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.AdminUsersController"
+      spacing="16" style="-fx-padding: 8;" stylesheets="@../css/styles.css">
+
+    <Label text="👥 Manajemen Pengguna" styleClass="label-title"/>
+    
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Filter Role:" styleClass="form-label"/>
+        <ComboBox fx:id="cmbRole" promptText="Semua Role" prefWidth="150" onAction="#handleFilter"/>
+    </HBox>
+
+    <TableView fx:id="tableUsers" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50">
+                <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colUsername" text="Username" prefWidth="150">
+                <cellValueFactory><PropertyValueFactory property="username"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colEmail" text="Email" prefWidth="200">
+                <cellValueFactory><PropertyValueFactory property="email"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colRole" text="Role" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="role"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="colTanggal" text="Tgl Daftar" prefWidth="150">
+                <cellValueFactory><PropertyValueFactory property="createdAt"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <HBox spacing="12" alignment="CENTER_RIGHT">
+        <Button text="🗑️ Hapus User" styleClass="btn-danger" onAction="#handleDelete" prefWidth="120"/>
+    </HBox>
+
+</VBox>

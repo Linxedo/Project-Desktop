@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.MainLayoutController"
+            prefWidth="1280" prefHeight="750"
+            stylesheets="@../css/styles.css">
+
+    <!-- SIDEBAR (Left) -->
+    <left>
+        <VBox fx:id="sidebar" styleClass="sidebar">
+            <!-- Brand -->
+            <VBox styleClass="sidebar-brand" spacing="2">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="🌴" style="-fx-font-size: 24px;"/>
+                    <Label text="WisataKu" styleClass="sidebar-brand">
+                        <padding><Insets left="0"/></padding>
+                    </Label>
+                </HBox>
+                <Label text="Sistem Informasi Wisata" styleClass="sidebar-brand-subtitle"/>
+            </VBox>
+
+            <Separator styleClass="sidebar-separator"/>
+
+            <!-- Dynamic Menu Container -->
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                        style="-fx-background-color: transparent; -fx-background: transparent;"
+                        VBox.vgrow="ALWAYS">
+                <VBox fx:id="menuContainer" styleClass="sidebar-menu" spacing="2"/>
+            </ScrollPane>
+
+            <!-- Bottom: Logout -->
+            <Separator styleClass="sidebar-separator"/>
+            <VBox alignment="CENTER" style="-fx-padding: 10 0 16 0;">
+                <Button fx:id="btnLogout" text="🚪  Keluar" styleClass="sidebar-item"
+                        onAction="#handleLogout" prefWidth="240"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- MAIN AREA (Center) -->
+    <center>
+        <VBox>
+            <!-- TOP BAR -->
+            <HBox fx:id="topBar" styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+                <TextField fx:id="txtSearch" styleClass="search-field"
+                           promptText="🔍  Cari destinasi wisata..."
+                           onAction="#handleSearch"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <VBox alignment="CENTER_RIGHT" spacing="2">
+                    <Label fx:id="lblUsername" text="Guest" styleClass="top-bar-username"/>
+                    <Label fx:id="lblRole" text="Tamu" styleClass="top-bar-role"/>
+                </VBox>
+            </HBox>
+
+            <!-- CONTENT AREA -->
+            <StackPane fx:id="contentArea" styleClass="content-area" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </center>
+</BorderPane>
