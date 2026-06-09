@@ -88,8 +88,8 @@ public class DashboardHomeController {
         card.setPrefWidth(260);
 
         javafx.scene.Node imageNode;
-        if (d.getImagePath() != null && !d.getImagePath().equals("placeholder.jpg")) {
-            java.io.File file = new java.io.File("uploads/" + d.getImagePath());
+        if (d.getFirstImagePath() != null && !d.getFirstImagePath().equals("placeholder.jpg")) {
+            java.io.File file = new java.io.File("uploads/" + d.getFirstImagePath());
             if (file.exists()) {
                 ImageView imgView = new ImageView(new javafx.scene.image.Image(file.toURI().toString()));
                 imgView.setFitWidth(260);

@@ -28,12 +28,13 @@ public class KelolaDestinasiController {
     @FXML private Label lblId;
     @FXML private Button btnDelete;
 
-    @FXML private Label lblNamaFile;
+    @FXML private Label lblJumlahGambar;
+    @FXML private javafx.scene.layout.HBox imagePreviewContainer;
     @FXML private TextField txtPetaLokasi;
 
     private DestinasiDAO destinasiDAO = new DestinasiDAO();
     private KategoriDAO kategoriDAO = new KategoriDAO();
-    private java.io.File selectedImageFile;
+    private java.util.List<java.io.File> selectedImageFiles = new java.util.ArrayList<>();
     private String currentImagePath = "placeholder.jpg";
 
     @FXML
@@ -66,10 +67,25 @@ public class KelolaDestinasiController {
         fileChooser.getExtensionFilters().addAll(
                 new javafx.stage.FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
-        java.io.File file = fileChooser.showOpenDialog(formContainer.getScene().getWindow());
-        if (file != null) {
-            selectedImageFile = file;
-            lblNamaFile.setText(file.getName());
+        java.util.List<java.io.File> files = fileChooser.showOpenMultipleDialog(formContainer.getScene().getWindow());
+        if (files != null && !files.isEmpty()) {
+            selectedImageFiles.addAll(files);
+            lblJumlahGambar.setText(selectedImageFiles.size() + " gambar dipilih");
+            renderImagePreviews();
+        }
+    }
+
+    private void renderImagePreviews() {
+        imagePreviewContainer.getChildren().clear();
+        // Render selected new files
+        for (java.io.File f : selectedImageFiles) {
+            try {
+                javafx.scene.image.ImageView iv = new javafx.scene.image.ImageView(new javafx.scene.image.Image(f.toURI().toString()));
+                iv.setFitHeight(60);
+                iv.setFitWidth(60);
+                iv.setPreserveRatio(true);
+                imagePreviewContainer.getChildren().add(iv);
+            } catch (Exception ignored) {}
         }
     }
 
@@ -85,9 +101,10 @@ public class KelolaDestinasiController {
         txtAlamat.clear();
         txtDeskripsi.clear();
         txtPetaLokasi.clear();
-        selectedImageFile = null;
+        selectedImageFiles.clear();
         currentImagePath = "placeholder.jpg";
-        lblNamaFile.setText("Belum ada gambar");
+        lblJumlahGambar.setText("0 gambar dipilih");
+        imagePreviewContainer.getChildren().clear();
         
         btnDelete.setVisible(false);
         formContainer.setVisible(true);
@@ -113,8 +130,21 @@ public class KelolaDestinasiController {
         txtPetaLokasi.setText(d.getPetaLokasi() != null ? d.getPetaLokasi() : "");
 
         currentImagePath = d.getImagePath() != null ? d.getImagePath() : "placeholder.jpg";
-        lblNamaFile.setText(currentImagePath);
-        selectedImageFile = null;
+        selectedImageFiles.clear();
+        lblJumlahGambar.setText(d.getImagePathsList().size() + " gambar (tersimpan)");
+        imagePreviewContainer.getChildren().clear();
+        for (String imgPath : d.getImagePathsList()) {
+            try {
+                java.io.File file = new java.io.File("uploads/" + imgPath);
+                if (file.exists()) {
+                    javafx.scene.image.ImageView iv = new javafx.scene.image.ImageView(new javafx.scene.image.Image(file.toURI().toString()));
+                    iv.setFitHeight(60);
+                    iv.setFitWidth(60);
+                    iv.setPreserveRatio(true);
+                    imagePreviewContainer.getChildren().add(iv);
+                }
+            } catch (Exception ignored) {}
+        }
 
         btnDelete.setVisible(true);
         formContainer.setVisible(true);
@@ -146,15 +176,26 @@ public class KelolaDestinasiController {
 
         // Handle Image Copy
         String finalImagePath = currentImagePath;
-        if (selectedImageFile != null) {
+        if (!selectedImageFiles.isEmpty()) {
             try {
                 java.io.File uploadDir = new java.io.File("uploads");
                 if (!uploadDir.exists()) uploadDir.mkdirs();
 
-                String newFileName = System.currentTimeMillis() + "_" + selectedImageFile.getName();
-                java.io.File destFile = new java.io.File(uploadDir, newFileName);
-                java.nio.file.Files.copy(selectedImageFile.toPath(), destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                finalImagePath = newFileName;
+                java.util.List<String> savedNames = new java.util.ArrayList<>();
+                
+                // If it's an update, maybe we keep old images or overwrite? 
+                // For simplicity, we just append new images to the existing ones.
+                if (currentImagePath != null && !currentImagePath.equals("placeholder.jpg")) {
+                    savedNames.addAll(java.util.Arrays.asList(currentImagePath.split(",")));
+                }
+
+                for (java.io.File f : selectedImageFiles) {
+                    String newFileName = System.currentTimeMillis() + "_" + f.getName();
+                    java.io.File destFile = new java.io.File(uploadDir, newFileName);
+                    java.nio.file.Files.copy(f.toPath(), destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    savedNames.add(newFileName);
+                }
+                finalImagePath = String.join(",", savedNames);
             } catch (java.io.IOException ex) {
                 AlertHelper.showError("Error", "Gagal menyimpan gambar: " + ex.getMessage());
                 return;
@@ -213,6 +254,7 @@ public class KelolaDestinasiController {
         formContainer.setVisible(false);
         formContainer.setManaged(false);
         tableDestinasi.getSelectionModel().clearSelection();
-        selectedImageFile = null;
+        selectedImageFiles.clear();
+        imagePreviewContainer.getChildren().clear();
     }
 }

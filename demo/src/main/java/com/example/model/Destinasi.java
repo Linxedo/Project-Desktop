@@ -58,6 +58,23 @@ public class Destinasi {
     public String getImagePath() { return imagePath; }
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
+    /**
+     * Parse comma-separated image paths into a List.
+     */
+    public java.util.List<String> getImagePathsList() {
+        if (imagePath == null || imagePath.isEmpty()) {
+            return java.util.Collections.singletonList("placeholder.jpg");
+        }
+        return java.util.Arrays.asList(imagePath.split(","));
+    }
+
+    /**
+     * Get only the first image for thumbnails.
+     */
+    public String getFirstImagePath() {
+        return getImagePathsList().get(0);
+    }
+
     public int getPengelolaId() { return pengelolaId; }
     public void setPengelolaId(int pengelolaId) { this.pengelolaId = pengelolaId; }
 

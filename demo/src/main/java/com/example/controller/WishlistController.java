@@ -50,8 +50,8 @@ public class WishlistController {
         card.setPrefWidth(260);
 
         javafx.scene.Node imageNode;
-        if (w.getImagePath() != null && !w.getImagePath().equals("placeholder.jpg")) {
-            java.io.File file = new java.io.File("uploads/" + w.getImagePath());
+        if (w.getFirstImagePath() != null && !w.getFirstImagePath().equals("placeholder.jpg")) {
+            java.io.File file = new java.io.File("uploads/" + w.getFirstImagePath());
             if (file.exists()) {
                 javafx.scene.image.ImageView imgView = new javafx.scene.image.ImageView(new javafx.scene.image.Image(file.toURI().toString()));
                 imgView.setFitWidth(260);

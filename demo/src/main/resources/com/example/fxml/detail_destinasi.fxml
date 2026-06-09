@@ -16,10 +16,10 @@
         <Button text="← Kembali" styleClass="btn-outline" onAction="#handleBack"
                 style="-fx-padding: 6 16; -fx-font-size: 12px;"/>
 
-        <!-- Destination Image -->
-        <HBox alignment="CENTER" styleClass="form-container" style="-fx-padding: 0; -fx-background-radius: 12; -fx-border-radius: 12;">
-            <ImageView fx:id="imgDestinasi" fitWidth="800" fitHeight="300" preserveRatio="true"/>
-        </HBox>
+        <!-- Destination Image Gallery -->
+        <ScrollPane fitToHeight="true" vbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <HBox fx:id="galleryContainer" spacing="12" styleClass="form-container" style="-fx-padding: 0; -fx-background-radius: 12; -fx-border-radius: 12;"/>
+        </ScrollPane>
 
         <!-- Destination Info Card -->
         <VBox styleClass="form-container" spacing="16">

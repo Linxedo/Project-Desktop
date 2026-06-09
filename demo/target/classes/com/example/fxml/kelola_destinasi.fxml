@@ -68,13 +68,15 @@
                     <Label text="Deskripsi" styleClass="form-label"/>
                     <TextArea fx:id="txtDeskripsi" prefRowCount="3" wrapText="true"/>
 
-                    <Label text="Gambar Destinasi" styleClass="form-label"/>
+                    <Label text="Gambar Destinasi (Bisa Pilih >1)" styleClass="form-label"/>
                     <VBox spacing="6">
                         <HBox spacing="8" alignment="CENTER_LEFT">
                             <Button text="Pilih Gambar..." styleClass="btn-outline" onAction="#handlePilihGambar"/>
-                            <Label fx:id="lblNamaFile" text="Belum ada gambar" styleClass="label-muted"/>
+                            <Label fx:id="lblJumlahGambar" text="0 gambar dipilih" styleClass="label-muted"/>
                         </HBox>
-                        <!-- Added ImageView support (requires fx:id and standard size limit) -->
+                        <ScrollPane fitToHeight="true" vbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;">
+                            <HBox fx:id="imagePreviewContainer" spacing="8" alignment="CENTER_LEFT"/>
+                        </ScrollPane>
                     </VBox>
 
                     <Label text="URL Peta Lokasi (Google Maps)" styleClass="form-label"/>

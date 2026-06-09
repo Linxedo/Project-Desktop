@@ -26,7 +26,7 @@ public class DetailDestinasiController {
     @FXML private Label lblJam;
     @FXML private Label lblPengelola;
     @FXML private Label lblDeskripsi;
-    @FXML private javafx.scene.image.ImageView imgDestinasi;
+    @FXML private HBox galleryContainer;
     @FXML private Button btnBukaPeta;
 
     @FXML private HBox actionButtons;
@@ -62,15 +62,31 @@ public class DetailDestinasiController {
         lblPengelola.setText(selectedDestinasi.getPengelolaNama() != null ? selectedDestinasi.getPengelolaNama() : "Admin");
         lblDeskripsi.setText(selectedDestinasi.getDeskripsi());
         
-        // Load Image
-        if (selectedDestinasi.getImagePath() != null && !selectedDestinasi.getImagePath().equals("placeholder.jpg")) {
-            try {
-                java.io.File file = new java.io.File("uploads/" + selectedDestinasi.getImagePath());
-                if (file.exists()) {
-                    imgDestinasi.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+        // Load Image Gallery
+        galleryContainer.getChildren().clear();
+        for (String imgPath : selectedDestinasi.getImagePathsList()) {
+            if (imgPath != null && !imgPath.equals("placeholder.jpg")) {
+                try {
+                    java.io.File file = new java.io.File("uploads/" + imgPath);
+                    if (file.exists()) {
+                        javafx.scene.image.ImageView iv = new javafx.scene.image.ImageView(new javafx.scene.image.Image(file.toURI().toString()));
+                        iv.setFitHeight(300);
+                        iv.setPreserveRatio(true);
+                        
+                        // Clip for rounded corners
+                        javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle(
+                            iv.getBoundsInLocal().getWidth(), 
+                            iv.getBoundsInLocal().getHeight()
+                        );
+                        clip.setArcWidth(12);
+                        clip.setArcHeight(12);
+                        iv.setClip(clip);
+
+                        galleryContainer.getChildren().add(iv);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Gagal memuat gambar " + imgPath + ": " + e.getMessage());
                 }
-            } catch (Exception e) {
-                System.err.println("Gagal memuat gambar: " + e.getMessage());
             }
         }
     }
