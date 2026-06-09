@@ -27,7 +27,12 @@ public class DatabaseConnection {
             Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("[DB] Koneksi ke database berhasil!");
-            
+            // Migration for ItineraryDetail: Change waktu_kunjungan to tanggal_kunjungan
+            try (java.sql.Statement stmt = connection.createStatement()) {
+                stmt.execute("ALTER TABLE itinerary_detail ADD COLUMN IF NOT EXISTS tanggal_kunjungan DATE");
+            } catch (SQLException e) {
+                System.out.println("Column tanggal_kunjungan already exists or could not be added.");
+            }
             // Auto-migration
             try (java.sql.Statement stmt = connection.createStatement()) {
                 stmt.execute("ALTER TABLE destinasi ADD COLUMN IF NOT EXISTS peta_lokasi TEXT;");

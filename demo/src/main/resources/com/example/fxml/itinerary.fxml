@@ -37,7 +37,7 @@
             <!-- Form Add Detail -->
             <HBox spacing="10" alignment="CENTER_LEFT" styleClass="form-container" style="-fx-padding: 12;">
                 <ComboBox fx:id="cmbDestinasi" promptText="Pilih Destinasi" prefWidth="200"/>
-                <TextField fx:id="txtWaktu" promptText="Waktu (HH:mm)" prefWidth="120"/>
+                <DatePicker fx:id="dpTanggalKunjungan" promptText="Tanggal" prefWidth="120"/>
                 <Button text="Tambah Destinasi" styleClass="btn-outline" onAction="#handleAddDetail"/>
             </HBox>
 
@@ -47,7 +47,7 @@
                     <TableColumn fx:id="colUrutan" text="Urutan" prefWidth="60">
                         <cellValueFactory><PropertyValueFactory property="urutan"/></cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="colWaktu" text="Waktu" prefWidth="80">
+                    <TableColumn fx:id="colWaktu" text="Tanggal" prefWidth="100">
                         <cellValueFactory><PropertyValueFactory property="formattedWaktu"/></cellValueFactory>
                     </TableColumn>
                     <TableColumn fx:id="colDestinasi" text="Destinasi" prefWidth="250">

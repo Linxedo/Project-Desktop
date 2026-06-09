@@ -73,13 +73,13 @@ public class ItineraryDAO {
      * Tambah detail ke itinerary.
      */
     public boolean addDetail(ItineraryDetail detail) {
-        String sql = "INSERT INTO itinerary_detail (itinerary_id, destinasi_id, waktu_kunjungan, urutan) " +
+        String sql = "INSERT INTO itinerary_detail (itinerary_id, destinasi_id, tanggal_kunjungan, urutan) " +
                      "VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, detail.getItineraryId());
             ps.setInt(2, detail.getDestinasiId());
-            ps.setTime(3, detail.getWaktuKunjungan());
+            ps.setDate(3, detail.getTanggalKunjungan());
             ps.setInt(4, detail.getUrutan());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -106,7 +106,7 @@ public class ItineraryDAO {
                 detail.setId(rs.getInt("id"));
                 detail.setItineraryId(rs.getInt("itinerary_id"));
                 detail.setDestinasiId(rs.getInt("destinasi_id"));
-                detail.setWaktuKunjungan(rs.getTime("waktu_kunjungan"));
+                detail.setTanggalKunjungan(rs.getDate("tanggal_kunjungan"));
                 detail.setUrutan(rs.getInt("urutan"));
                 detail.setNamaWisata(rs.getString("nama_wisata"));
                 detail.setHargaTiket(rs.getDouble("harga_tiket"));

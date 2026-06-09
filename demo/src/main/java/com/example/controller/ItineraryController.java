@@ -30,7 +30,7 @@ public class ItineraryController {
     @FXML private Label lblTotalBiaya;
 
     @FXML private ComboBox<Destinasi> cmbDestinasi;
-    @FXML private TextField txtWaktu;
+    @FXML private DatePicker dpTanggalKunjungan;
     @FXML private TableView<ItineraryDetail> tableDetail;
 
     private ItineraryDAO itineraryDAO = new ItineraryDAO();
@@ -112,30 +112,22 @@ public class ItineraryController {
         if (selectedItinerary == null) return;
 
         Destinasi d = cmbDestinasi.getValue();
-        String waktu = txtWaktu.getText();
+        LocalDate tanggal = dpTanggalKunjungan.getValue();
 
-        if (d == null) {
-            AlertHelper.showWarning("Perhatian", "Pilih destinasi terlebih dahulu.");
-            return;
-        }
-
-        Time t;
-        try {
-            t = Time.valueOf(LocalTime.parse(waktu + ":00"));
-        } catch (DateTimeParseException | NullPointerException e) {
-            AlertHelper.showError("Error", "Format waktu tidak valid. Gunakan HH:mm (contoh: 08:30).");
+        if (d == null || tanggal == null) {
+            AlertHelper.showWarning("Perhatian", "Pilih destinasi dan tanggal terlebih dahulu.");
             return;
         }
 
         ItineraryDetail detail = new ItineraryDetail();
         detail.setItineraryId(selectedItinerary.getId());
         detail.setDestinasiId(d.getId());
-        detail.setWaktuKunjungan(t);
+        detail.setTanggalKunjungan(Date.valueOf(tanggal));
         // Simple auto ordering
         detail.setUrutan(tableDetail.getItems().size() + 1);
 
         if (itineraryDAO.addDetail(detail)) {
-            txtWaktu.clear();
+            dpTanggalKunjungan.setValue(null);
             cmbDestinasi.getSelectionModel().clearSelection();
             loadTableDetail();
             

@@ -280,6 +280,7 @@
 .date-picker .text-field {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-text-fill: #FFFFFF;
 }
 
 .date-picker-popup {
@@ -289,6 +290,10 @@
 
 .date-picker-popup .month-year-pane {
     -fx-background-color: #1E1E1E;
+}
+
+.date-picker-popup .day-name-cell, .date-picker-popup .week-number-cell {
+    -fx-text-fill: #808080;
 }
 
 .date-picker-popup .spinner .label {

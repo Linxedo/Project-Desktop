@@ -10,16 +10,17 @@ public class ItineraryDetail {
     private int id;
     private int itineraryId;
     private int destinasiId;
-    private Time waktuKunjungan;
+    private java.sql.Date tanggalKunjungan;
     private int urutan;
 
-    // Dari JOIN
+    // Additional fields for View
+    private String namaDestinasi;
+    private String kategoriDestinasi;
     private String namaWisata;
     private double hargaTiket;
 
     public ItineraryDetail() {}
 
-    // Getters & Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -29,11 +30,17 @@ public class ItineraryDetail {
     public int getDestinasiId() { return destinasiId; }
     public void setDestinasiId(int destinasiId) { this.destinasiId = destinasiId; }
 
-    public Time getWaktuKunjungan() { return waktuKunjungan; }
-    public void setWaktuKunjungan(Time waktuKunjungan) { this.waktuKunjungan = waktuKunjungan; }
+    public java.sql.Date getTanggalKunjungan() { return tanggalKunjungan; }
+    public void setTanggalKunjungan(java.sql.Date tanggalKunjungan) { this.tanggalKunjungan = tanggalKunjungan; }
 
     public int getUrutan() { return urutan; }
     public void setUrutan(int urutan) { this.urutan = urutan; }
+
+    public String getNamaDestinasi() { return namaDestinasi; }
+    public void setNamaDestinasi(String namaDestinasi) { this.namaDestinasi = namaDestinasi; }
+
+    public String getKategoriDestinasi() { return kategoriDestinasi; }
+    public void setKategoriDestinasi(String kategoriDestinasi) { this.kategoriDestinasi = kategoriDestinasi; }
 
     public String getNamaWisata() { return namaWisata; }
     public void setNamaWisata(String namaWisata) { this.namaWisata = namaWisata; }
@@ -41,8 +48,9 @@ public class ItineraryDetail {
     public double getHargaTiket() { return hargaTiket; }
     public void setHargaTiket(double hargaTiket) { this.hargaTiket = hargaTiket; }
 
+    // Helper for table view
     public String getFormattedWaktu() {
-        return waktuKunjungan != null ? waktuKunjungan.toString().substring(0, 5) : "-";
+        return tanggalKunjungan != null ? tanggalKunjungan.toString() : "-";
     }
 
     @Override
