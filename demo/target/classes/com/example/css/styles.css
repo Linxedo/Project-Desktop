@@ -426,7 +426,7 @@
     -fx-border-radius: 0;
     -fx-border-color: transparent;
     -fx-cursor: hand;
-    -fx-max-width: 1.7976931348623157E308;
+    -fx-max-width: infinity;
     -fx-min-height: 46;
 }
 

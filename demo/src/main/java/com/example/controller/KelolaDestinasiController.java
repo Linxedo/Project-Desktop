@@ -28,8 +28,13 @@ public class KelolaDestinasiController {
     @FXML private Label lblId;
     @FXML private Button btnDelete;
 
+    @FXML private Label lblNamaFile;
+    @FXML private TextField txtPetaLokasi;
+
     private DestinasiDAO destinasiDAO = new DestinasiDAO();
     private KategoriDAO kategoriDAO = new KategoriDAO();
+    private java.io.File selectedImageFile;
+    private String currentImagePath = "placeholder.jpg";
 
     @FXML
     public void initialize() {
@@ -55,6 +60,20 @@ public class KelolaDestinasiController {
     }
 
     @FXML
+    private void handlePilihGambar() {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Pilih Gambar Destinasi");
+        fileChooser.getExtensionFilters().addAll(
+                new javafx.stage.FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        java.io.File file = fileChooser.showOpenDialog(formContainer.getScene().getWindow());
+        if (file != null) {
+            selectedImageFile = file;
+            lblNamaFile.setText(file.getName());
+        }
+    }
+
+    @FXML
     private void handleShowAddForm() {
         tableDestinasi.getSelectionModel().clearSelection();
         lblFormTitle.setText("Tambah Destinasi Baru");
@@ -65,6 +84,10 @@ public class KelolaDestinasiController {
         txtJam.clear();
         txtAlamat.clear();
         txtDeskripsi.clear();
+        txtPetaLokasi.clear();
+        selectedImageFile = null;
+        currentImagePath = "placeholder.jpg";
+        lblNamaFile.setText("Belum ada gambar");
         
         btnDelete.setVisible(false);
         formContainer.setVisible(true);
@@ -87,6 +110,11 @@ public class KelolaDestinasiController {
         txtJam.setText(d.getJamOperasional());
         txtAlamat.setText(d.getAlamat());
         txtDeskripsi.setText(d.getDeskripsi());
+        txtPetaLokasi.setText(d.getPetaLokasi() != null ? d.getPetaLokasi() : "");
+
+        currentImagePath = d.getImagePath() != null ? d.getImagePath() : "placeholder.jpg";
+        lblNamaFile.setText(currentImagePath);
+        selectedImageFile = null;
 
         btnDelete.setVisible(true);
         formContainer.setVisible(true);
@@ -101,6 +129,7 @@ public class KelolaDestinasiController {
         String jam = txtJam.getText();
         String alamat = txtAlamat.getText();
         String deskripsi = txtDeskripsi.getText();
+        String petaLokasi = txtPetaLokasi.getText();
 
         if (nama.isEmpty() || kat == null || harga.isEmpty()) {
             AlertHelper.showError("Error", "Nama, Kategori, dan Harga tidak boleh kosong.");
@@ -115,6 +144,23 @@ public class KelolaDestinasiController {
             return;
         }
 
+        // Handle Image Copy
+        String finalImagePath = currentImagePath;
+        if (selectedImageFile != null) {
+            try {
+                java.io.File uploadDir = new java.io.File("uploads");
+                if (!uploadDir.exists()) uploadDir.mkdirs();
+
+                String newFileName = System.currentTimeMillis() + "_" + selectedImageFile.getName();
+                java.io.File destFile = new java.io.File(uploadDir, newFileName);
+                java.nio.file.Files.copy(selectedImageFile.toPath(), destFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                finalImagePath = newFileName;
+            } catch (java.io.IOException ex) {
+                AlertHelper.showError("Error", "Gagal menyimpan gambar: " + ex.getMessage());
+                return;
+            }
+        }
+
         Destinasi d = new Destinasi();
         d.setNamaWisata(nama);
         d.setKategoriId(kat.getId());
@@ -122,8 +168,9 @@ public class KelolaDestinasiController {
         d.setJamOperasional(jam);
         d.setAlamat(alamat);
         d.setDeskripsi(deskripsi);
+        d.setPetaLokasi(petaLokasi);
         d.setPengelolaId(SessionManager.getInstance().getCurrentUserId());
-        d.setImagePath("placeholder.jpg"); // default
+        d.setImagePath(finalImagePath);
 
         String idStr = lblId.getText();
         if (idStr.isEmpty()) {
@@ -166,5 +213,6 @@ public class KelolaDestinasiController {
         formContainer.setVisible(false);
         formContainer.setManaged(false);
         tableDestinasi.getSelectionModel().clearSelection();
+        selectedImageFile = null;
     }
 }

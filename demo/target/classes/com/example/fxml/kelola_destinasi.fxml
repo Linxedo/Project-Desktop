@@ -68,6 +68,18 @@
                     <Label text="Deskripsi" styleClass="form-label"/>
                     <TextArea fx:id="txtDeskripsi" prefRowCount="3" wrapText="true"/>
 
+                    <Label text="Gambar Destinasi" styleClass="form-label"/>
+                    <VBox spacing="6">
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Button text="Pilih Gambar..." styleClass="btn-outline" onAction="#handlePilihGambar"/>
+                            <Label fx:id="lblNamaFile" text="Belum ada gambar" styleClass="label-muted"/>
+                        </HBox>
+                        <!-- Added ImageView support (requires fx:id and standard size limit) -->
+                    </VBox>
+
+                    <Label text="URL Peta Lokasi (Google Maps)" styleClass="form-label"/>
+                    <TextField fx:id="txtPetaLokasi" promptText="https://maps.google.com/..."/>
+
                     <!-- Simpan ID destinasi untuk update -->
                     <Label fx:id="lblId" visible="false" managed="false"/>
                 </VBox>

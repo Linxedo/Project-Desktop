@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.DetailDestinasiController"
             fitToWidth="true" hbarPolicy="NEVER"
@@ -14,6 +15,11 @@
         <!-- Back Button -->
         <Button text="← Kembali" styleClass="btn-outline" onAction="#handleBack"
                 style="-fx-padding: 6 16; -fx-font-size: 12px;"/>
+
+        <!-- Destination Image -->
+        <HBox alignment="CENTER" styleClass="form-container" style="-fx-padding: 0; -fx-background-radius: 12; -fx-border-radius: 12;">
+            <ImageView fx:id="imgDestinasi" fitWidth="800" fitHeight="300" preserveRatio="true"/>
+        </HBox>
 
         <!-- Destination Info Card -->
         <VBox styleClass="form-container" spacing="16">
@@ -54,13 +60,10 @@
                 <Label fx:id="lblDeskripsi" text="-" wrapText="true" style="-fx-text-fill: #B3B3B3; -fx-line-spacing: 4;"/>
             </VBox>
 
-            <!-- Map Simulation -->
+            <!-- Peta Lokasi -->
             <VBox spacing="6">
-                <Label text="🗺️ Peta Lokasi (Simulasi)" styleClass="form-section-title"/>
-                <VBox alignment="CENTER" prefHeight="180"
-                      style="-fx-background-color: #2A2A2A; -fx-background-radius: 8;">
-                    <Label fx:id="lblMap" text="📍 Peta lokasi destinasi" style="-fx-text-fill: #808080; -fx-font-size: 16px;"/>
-                </VBox>
+                <Label text="🗺️ Peta Lokasi" styleClass="form-section-title"/>
+                <Button fx:id="btnBukaPeta" text="Buka di Google Maps" styleClass="btn-outline" onAction="#handleBukaPeta"/>
             </VBox>
         </VBox>
 

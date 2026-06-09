@@ -3,6 +3,7 @@ module com.example {
     requires javafx.fxml;
     requires java.sql;
     requires org.postgresql.jdbc;
+    requires java.desktop;
 
     opens com.example to javafx.fxml;
     opens com.example.controller to javafx.fxml;

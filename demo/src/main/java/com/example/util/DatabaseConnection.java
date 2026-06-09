@@ -27,6 +27,15 @@ public class DatabaseConnection {
             Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("[DB] Koneksi ke database berhasil!");
+            
+            // Auto-migration
+            try (java.sql.Statement stmt = connection.createStatement()) {
+                stmt.execute("ALTER TABLE destinasi ADD COLUMN IF NOT EXISTS peta_lokasi TEXT;");
+                System.out.println("[DB] Auto-migration untuk peta_lokasi berhasil.");
+            } catch (SQLException ex) {
+                System.err.println("[DB ERROR] Gagal melakukan auto-migration: " + ex.getMessage());
+            }
+
         } catch (ClassNotFoundException e) {
             System.err.println("[DB ERROR] PostgreSQL JDBC Driver tidak ditemukan!");
             e.printStackTrace();

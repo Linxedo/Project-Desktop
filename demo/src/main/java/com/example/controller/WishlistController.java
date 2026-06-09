@@ -49,12 +49,22 @@ public class WishlistController {
         card.getStyleClass().add("card");
         card.setPrefWidth(260);
 
-        // Image placeholder
-        VBox imgPlaceholder = new VBox();
-        imgPlaceholder.setPrefHeight(140);
-        imgPlaceholder.setStyle("-fx-background-color: #2A2A2A; -fx-background-radius: 12 12 0 0;");
-        imgPlaceholder.setAlignment(Pos.CENTER);
-        imgPlaceholder.getChildren().add(new Label("🖼️ " + w.getNamaWisata()));
+        javafx.scene.Node imageNode;
+        if (w.getImagePath() != null && !w.getImagePath().equals("placeholder.jpg")) {
+            java.io.File file = new java.io.File("uploads/" + w.getImagePath());
+            if (file.exists()) {
+                javafx.scene.image.ImageView imgView = new javafx.scene.image.ImageView(new javafx.scene.image.Image(file.toURI().toString()));
+                imgView.setFitWidth(260);
+                imgView.setFitHeight(140);
+                javafx.scene.layout.StackPane sp = new javafx.scene.layout.StackPane(imgView);
+                sp.setStyle("-fx-background-radius: 12 12 0 0; -fx-background-color: #2A2A2A;");
+                imageNode = sp;
+            } else {
+                imageNode = createPlaceholder(w.getNamaWisata());
+            }
+        } else {
+            imageNode = createPlaceholder(w.getNamaWisata());
+        }
 
         VBox body = new VBox(6);
         body.getStyleClass().add("card-body");
@@ -77,18 +87,21 @@ public class WishlistController {
         footer.setAlignment(Pos.CENTER_RIGHT);
 
         body.getChildren().addAll(lblKategori, lblNama, footer);
-        card.getChildren().addAll(imgPlaceholder, body);
+        card.getChildren().addAll(imageNode, body);
 
         // Click on image/name to view detail
         card.setOnMouseClicked(e -> {
             // Need to convert Wishlist to Destinasi for detail view
-            // In full app, fetch Destinasi by ID here
             Destinasi d = new Destinasi();
             d.setId(w.getDestinasiId());
             d.setNamaWisata(w.getNamaWisata());
-            // This is a simplified transition. Properly should fetch from DestinasiDAO.
-            // DetailDestinasiController.selectedDestinasi = d;
-            // MainLayoutController.getInstance().loadContent("detail_destinasi");
+            d.setKategoriNama(w.getKategoriNama());
+            d.setRatingRataRata(w.getRatingRataRata());
+            d.setHargaTiket(w.getHargaTiket());
+            d.setAlamat(w.getAlamat());
+            d.setImagePath(w.getImagePath());
+            DetailDestinasiController.selectedDestinasi = d;
+            MainLayoutController.getInstance().loadContent("detail_destinasi");
         });
 
         return card;
@@ -97,5 +110,14 @@ public class WishlistController {
     @FXML
     private void handleExplore() {
         MainLayoutController.getInstance().loadContent("dashboard_home");
+    }
+
+    private VBox createPlaceholder(String name) {
+        VBox imgPlaceholder = new VBox();
+        imgPlaceholder.setPrefHeight(140);
+        imgPlaceholder.setStyle("-fx-background-color: #2A2A2A; -fx-background-radius: 12 12 0 0;");
+        imgPlaceholder.setAlignment(Pos.CENTER);
+        imgPlaceholder.getChildren().add(new Label("🖼️ " + name));
+        return imgPlaceholder;
     }
 }

@@ -87,12 +87,23 @@ public class DashboardHomeController {
         card.getStyleClass().add("card");
         card.setPrefWidth(260);
 
-        // Placeholder for image
-        VBox imgPlaceholder = new VBox();
-        imgPlaceholder.setPrefHeight(140);
-        imgPlaceholder.setStyle("-fx-background-color: #2A2A2A; -fx-background-radius: 12 12 0 0;");
-        imgPlaceholder.setAlignment(Pos.CENTER);
-        imgPlaceholder.getChildren().add(new Label("🖼️ " + d.getNamaWisata()));
+        javafx.scene.Node imageNode;
+        if (d.getImagePath() != null && !d.getImagePath().equals("placeholder.jpg")) {
+            java.io.File file = new java.io.File("uploads/" + d.getImagePath());
+            if (file.exists()) {
+                ImageView imgView = new ImageView(new javafx.scene.image.Image(file.toURI().toString()));
+                imgView.setFitWidth(260);
+                imgView.setFitHeight(140);
+                // Kita gunakan kliping sederhana dengan StackPane / style
+                javafx.scene.layout.StackPane sp = new javafx.scene.layout.StackPane(imgView);
+                sp.setStyle("-fx-background-radius: 12 12 0 0; -fx-background-color: #2A2A2A;");
+                imageNode = sp;
+            } else {
+                imageNode = createPlaceholder(d.getNamaWisata());
+            }
+        } else {
+            imageNode = createPlaceholder(d.getNamaWisata());
+        }
 
         VBox body = new VBox(6);
         body.getStyleClass().add("card-body");
@@ -121,7 +132,7 @@ public class DashboardHomeController {
         footer.getChildren().addAll(lblHarga, rightFooter);
 
         body.getChildren().addAll(lblKategori, lblNama, lblAlamat, footer);
-        card.getChildren().addAll(imgPlaceholder, body);
+        card.getChildren().addAll(imageNode, body);
 
         card.setOnMouseClicked(e -> {
             DetailDestinasiController.selectedDestinasi = d;
@@ -135,5 +146,14 @@ public class DashboardHomeController {
     private void handleShowAll() {
         selectedKategoriId = -1;
         loadDestinasi(null, -1);
+    }
+
+    private VBox createPlaceholder(String name) {
+        VBox imgPlaceholder = new VBox();
+        imgPlaceholder.setPrefHeight(140);
+        imgPlaceholder.setStyle("-fx-background-color: #2A2A2A; -fx-background-radius: 12 12 0 0;");
+        imgPlaceholder.setAlignment(Pos.CENTER);
+        imgPlaceholder.getChildren().add(new Label("🖼️ " + name));
+        return imgPlaceholder;
     }
 }

@@ -19,6 +19,7 @@ public class Destinasi {
     private String imagePath;
     private int pengelolaId;
     private String pengelolaNama; // Dari JOIN
+    private String petaLokasi;
     private Timestamp createdAt;
 
     public Destinasi() {}
@@ -26,6 +27,9 @@ public class Destinasi {
     // Getters & Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
+
+    public String getPetaLokasi() { return petaLokasi; }
+    public void setPetaLokasi(String petaLokasi) { this.petaLokasi = petaLokasi; }
 
     public String getNamaWisata() { return namaWisata; }
     public void setNamaWisata(String namaWisata) { this.namaWisata = namaWisata; }

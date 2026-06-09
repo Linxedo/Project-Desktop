@@ -152,7 +152,7 @@ public class DestinasiDAO {
      */
     public boolean create(Destinasi d) {
         String sql = "INSERT INTO destinasi (nama_wisata, kategori_id, alamat, deskripsi, harga_tiket, " +
-                     "jam_operasional, image_path, pengelola_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                     "jam_operasional, image_path, pengelola_id, peta_lokasi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, d.getNamaWisata());
@@ -163,6 +163,7 @@ public class DestinasiDAO {
             ps.setString(6, d.getJamOperasional());
             ps.setString(7, d.getImagePath());
             ps.setInt(8, d.getPengelolaId());
+            ps.setString(9, d.getPetaLokasi());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("[DestinasiDAO] Create error: " + e.getMessage());
@@ -175,7 +176,7 @@ public class DestinasiDAO {
      */
     public boolean update(Destinasi d) {
         String sql = "UPDATE destinasi SET nama_wisata = ?, kategori_id = ?, alamat = ?, deskripsi = ?, " +
-                     "harga_tiket = ?, jam_operasional = ?, image_path = ? WHERE id = ?";
+                     "harga_tiket = ?, jam_operasional = ?, image_path = ?, peta_lokasi = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, d.getNamaWisata());
@@ -185,7 +186,8 @@ public class DestinasiDAO {
             ps.setDouble(5, d.getHargaTiket());
             ps.setString(6, d.getJamOperasional());
             ps.setString(7, d.getImagePath());
-            ps.setInt(8, d.getId());
+            ps.setString(8, d.getPetaLokasi());
+            ps.setInt(9, d.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("[DestinasiDAO] Update error: " + e.getMessage());
@@ -267,6 +269,9 @@ public class DestinasiDAO {
         d.setImagePath(rs.getString("image_path"));
         d.setPengelolaId(rs.getInt("pengelola_id"));
         d.setCreatedAt(rs.getTimestamp("created_at"));
+        try {
+            d.setPetaLokasi(rs.getString("peta_lokasi"));
+        } catch (SQLException ignored) {}
         try {
             d.setKategoriNama(rs.getString("nama_kategori"));
             d.setPengelolaNama(rs.getString("pengelola_nama"));

@@ -26,7 +26,8 @@ public class DetailDestinasiController {
     @FXML private Label lblJam;
     @FXML private Label lblPengelola;
     @FXML private Label lblDeskripsi;
-    @FXML private Label lblMap;
+    @FXML private javafx.scene.image.ImageView imgDestinasi;
+    @FXML private Button btnBukaPeta;
 
     @FXML private HBox actionButtons;
     @FXML private Button btnBooking;
@@ -60,7 +61,18 @@ public class DetailDestinasiController {
         lblJam.setText(selectedDestinasi.getJamOperasional());
         lblPengelola.setText(selectedDestinasi.getPengelolaNama() != null ? selectedDestinasi.getPengelolaNama() : "Admin");
         lblDeskripsi.setText(selectedDestinasi.getDeskripsi());
-        lblMap.setText("📍 Peta Lokasi: " + selectedDestinasi.getNamaWisata());
+        
+        // Load Image
+        if (selectedDestinasi.getImagePath() != null && !selectedDestinasi.getImagePath().equals("placeholder.jpg")) {
+            try {
+                java.io.File file = new java.io.File("uploads/" + selectedDestinasi.getImagePath());
+                if (file.exists()) {
+                    imgDestinasi.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+                }
+            } catch (Exception e) {
+                System.err.println("Gagal memuat gambar: " + e.getMessage());
+            }
+        }
     }
 
     private void setupButtons() {
@@ -121,6 +133,19 @@ public class DetailDestinasiController {
     @FXML
     private void handleBack() {
         MainLayoutController.getInstance().loadContent("dashboard_home");
+    }
+
+    @FXML
+    private void handleBukaPeta() {
+        if (selectedDestinasi.getPetaLokasi() != null && !selectedDestinasi.getPetaLokasi().isEmpty()) {
+            try {
+                java.awt.Desktop.getDesktop().browse(new java.net.URI(selectedDestinasi.getPetaLokasi()));
+            } catch (Exception e) {
+                AlertHelper.showError("Error", "Gagal membuka tautan peta.");
+            }
+        } else {
+            AlertHelper.showWarning("Peringatan", "Peta lokasi belum ditambahkan oleh pengelola.");
+        }
     }
 
     @FXML
